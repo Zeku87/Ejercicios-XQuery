@@ -1,0 +1,14 @@
+# Obtén por cada zona el número de productos que tiene.
+for $i in distinct-values(//produc/cod_zona)
+return count(//produc[cod_zona = $i])
+
+# Obtén la denominación de los productos entre las etiquetas 10 si son del código 10,
+# 20 si son de la zona 20, 30 si son de la zona 30, 40 si son de la zona 40.
+for $zona in distinct-values(//produc/cod_zona)
+return //produc[cod_zona = $zona]//denominacion
+
+# Obtén por cada zona la denominación de los productos más caros.
+for $zona in distinct-values(//produc/cod_zona)
+let $precio_max := max(//produc[cod_zona = $zona]//precio)
+let $denominacion:= //produc[precio = $precio_max]//denominacion
+return concat($denominacion, ": ", $precio_max, " EUROS &#10;")
