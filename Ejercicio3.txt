@@ -1,0 +1,13 @@
+Uso avanzado de XQuery: A partir de los documentos departamentos.xml y empleados.xml
+Genera una lista que ofrecerá la información agregada sobre el número de empleados y el salario
+medio para los departamentos que tengan más de 3 empleados. Los resultados se mostrarán de
+manera ordenada descendentemente con relación al salario medio del departamento al que
+pertenece el empleado. El salario medio tiene que ser mostrado con una precisión de dos cifras
+decimales usando la función round-half-to-even.
+
+for $i in distinct-values(//DEP_ROW/DEPT_NO)
+  let $trabajadores := count(//EMP_ROW[DEPT_NO=$i])
+  let $sueldo_promedio := round-half-to-even(avg(//EMP_ROW[DEPT_NO=$i and count(//EMP_ROW[DEPT_NO=$i]) > 3]/SALARIO),2)
+  where $trabajadores > 3
+  order by  $sueldo_promedio descending
+return concat($trabajadores, " - ", $sueldo_promedio)

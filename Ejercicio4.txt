@@ -1,0 +1,13 @@
+# Añade un empleado al departamento que ocupa la posición 2. 
+# Los datos son el salario 2340, el puesto Técnico, y nombre Pedro Fraile.
+
+insert node
+  <empleado salario="2340">
+    <puesto>Técnico</puesto>
+    <nombre>Pedro Fraile</nombre>
+  </empleado>
+into //departamento[2]
+
+#Actualiza el salario de los empleados del departamento con código MAT1. Sumar al salario 100.
+for $i in //departamento[codigo= "MAT1"]/empleado/@salario
+return replace value of node $i with ($i+100)
